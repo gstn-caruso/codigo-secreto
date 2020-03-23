@@ -13,7 +13,7 @@ const CLIENT_BUILD_PATH = path.join(__dirname, '../../client/build');
 app.use(express.static(CLIENT_BUILD_PATH));
 
 // API
-app.post('/api/crear', (req, res) => {
+app.post('/api/tablero/crear', (req, res) => {
   res.set('Content-Type', 'application/json');
   models.Tablero.create().then(tablero => res.send(JSON.stringify({ tablero: tablero }, null, 2)));
 });
