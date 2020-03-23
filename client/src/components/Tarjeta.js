@@ -1,7 +1,7 @@
 import React from 'react';
 import anonima from '../assets/anonima.jpg';
 
-const Tarjeta = props => <div className={'tarjeta'}>
+const Tarjeta = props => <div className={`tarjeta ${props.agente}`}>
   <div className={'borde'}>
     <div className={'superior'}>
       <div className={'palabra-chica'}>

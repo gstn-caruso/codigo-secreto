@@ -1,22 +1,6 @@
+const Clave = require('../src/models/Clave');
+
 const _ = require('lodash');
-
-class Clave {
-
-  constructor(agenteInicial) {
-    let x = _.range(25);
-    _.fill(x, 'asesino', 0, 1);
-    _.fill(x, agenteInicial, 1, 10);
-    _.fill(x, this.agenteEnemigoDe(agenteInicial), 10, 18);
-    _.fill(x, 'civil', 18, 25);
-
-    this.casillas = _.shuffle(x);
-    this.agenteInicial = agenteInicial ? agenteInicial : _.shuffle(this.posiblesAgentes())[0];
-  }
-
-  posiblesAgentes = () => ['agenteRojo', 'agenteAzul'];
-
-  agenteEnemigoDe = agenteInicial => agenteInicial === 'agenteRojo' ? 'agenteAzul' : 'agenteRojo';
-}
 
 describe('Clave', () => {
   const clave = new Clave();

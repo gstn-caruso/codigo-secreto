@@ -5,13 +5,13 @@ import Tarjeta from './Tarjeta';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { palabras: [] };
+    this.state = { tarjetas: [] };
   }
 
   componentDidMount() {
-    this.callApi('/api/palabras')
-      .then(({ palabras }) => {
-        this.setState({ palabras: palabras });
+    this.callApi('/api/tablero')
+      .then((tarjetas) => {
+        this.setState({ tarjetas: tarjetas });
       })
       .catch(console.error);
   }
@@ -38,7 +38,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className={'tablero'}>
-          {this.state.palabras.map((palabra) => <Tarjeta palabra={palabra}/>)}
+          {this.state.tarjetas.map(({ palabra, agente }) => <Tarjeta palabra={palabra} agente={agente} key={palabra}/>)}
         </div>
       </div>
     );

@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const palabrasRepositorio = require('./palabrasRepositorio');
+const Tablero = require('./models/Tablero');
 const app = express();
 
 // Constants
@@ -14,9 +14,10 @@ const CLIENT_BUILD_PATH = path.join(__dirname, '../../client/build');
 app.use(express.static(CLIENT_BUILD_PATH));
 
 // API
-app.get('/api/palabras', (req, res) => {
+app.get('/api/tablero', (req, res) => {
   res.set('Content-Type', 'application/json');
-  res.send(JSON.stringify(palabrasRepositorio.palabras(), null, 2));
+  const tablero = new Tablero();
+  res.send(JSON.stringify(tablero.tarjetas(), null, 2));
 });
 
 // All remaining requests return the React app, so it can handle routing.
