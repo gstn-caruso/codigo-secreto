@@ -5,8 +5,10 @@ module.exports = class Clave {
   casillas;
   agenteInicial;
 
+  posiblesAgentes = ['agenteRojo', 'agenteAzul'];
+
   constructor(agenteInicial) {
-    this.agenteInicial = agenteInicial ? agenteInicial : _.shuffle(this.posiblesAgentes())[0];
+    this.agenteInicial = agenteInicial ? agenteInicial : _.sample(this.posiblesAgentes);
 
     let x = _.range(25);
     _.fill(x, 'asesino', 0, 1);
@@ -16,8 +18,5 @@ module.exports = class Clave {
     _.fill(x, 'civil', 18, 25);
     this.casillas = _.shuffle(x);
   }
-
-  posiblesAgentes = () => ['agenteRojo', 'agenteAzul'];
-
   agenteEnemigoDe = unAgente => unAgente === 'agenteRojo' ? 'agenteAzul' : 'agenteRojo';
 };

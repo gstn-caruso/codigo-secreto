@@ -1,4 +1,4 @@
-const Clave = require('../src/models/Clave');
+const Clave = require('../src/clave');
 
 const _ = require('lodash');
 
