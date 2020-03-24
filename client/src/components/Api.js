@@ -1,4 +1,4 @@
-const request = async (ruta, opciones = {}) => {
+const request = async (ruta, opciones) => {
   const resp = await fetch(ruta, opciones);
   window._resp = resp;
   let text = await resp.text();

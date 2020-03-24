@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import request from './Api';
+import MenuInicio from './MenuInicio';
 
 class Inicio extends Component {
 
@@ -17,12 +18,16 @@ class Inicio extends Component {
       .catch(err => alert(err));
   };
 
+  entrarJuego = (tableroId) => {
+    this.setState({ tableroId: tableroId });
+  };
+
   render() {
     return (
       this.state.tableroId ?
         <Redirect to={{ pathname: `/tablero/${this.state.tableroId}` }}/>
         :
-        <button onClick={this.crearJuego}>Crear nuevo juego</button>
+        <MenuInicio nuevoJuego={this.crearJuego} entrarJuego={this.entrarJuego}/>
     );
   }
 }
