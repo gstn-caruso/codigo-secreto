@@ -1,12 +1,19 @@
 const request = async (ruta, opciones) => {
-  const resp = await fetch(ruta, opciones);
+  const defaultHeaders = {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const resp = await fetch(ruta, Object.assign(defaultHeaders, opciones));
   window._resp = resp;
   let text = await resp.text();
   let data = null;
   try {
     data = JSON.parse(text); // cannot call both .json and .text - await resp.json();
   } catch (e) {
-    console.err(`Invalid json\n${e}`);
+    console.error(`Invalid json\n${e}`);
   }
 
   if (resp.status !== 200) {

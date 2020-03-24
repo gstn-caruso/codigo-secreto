@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     agente: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    descubierta: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
   });
   Tarjeta.associate = function(models) {

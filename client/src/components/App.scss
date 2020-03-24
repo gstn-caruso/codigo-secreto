@@ -8,6 +8,7 @@
 .tarjeta {
   background-color: beige;
   border-radius: 1rem;
+  cursor: pointer;
   padding: 1rem;
   position: relative;
 
@@ -34,6 +35,10 @@
 
 .asesino {
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+.civil {
+  background-color: rgba(143, 188, 143, 0.2);
 }
 
 .anonimo {

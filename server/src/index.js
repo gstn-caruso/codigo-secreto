@@ -8,9 +8,9 @@ const HOST = '0.0.0.0';
 
 const CLIENT_BUILD_PATH = path.join(__dirname, '../../client/build');
 
-
 // Static files
 app.use(express.static(CLIENT_BUILD_PATH));
+app.use(express.json());
 
 // API
 app.post('/api/tablero/crear', (req, res) => {
@@ -20,8 +20,21 @@ app.post('/api/tablero/crear', (req, res) => {
 
 app.get('/api/tablero/:id', (req, res) => {
   res.set('Content-Type', 'application/json');
-  models.Tablero.findByPk(req.params.id, { include: ['tarjetas'] }).then(tablero => {
+  models.Tablero.findByPk(req.params.id, {
+    include: ['tarjetas'],
+    order: [['tarjetas', 'id', 'ASC']]
+  }).then(tablero => {
     res.send(JSON.stringify({ tablero: tablero }, null, 2));
+  });
+});
+
+app.patch('/api/tarjeta/:id', (req, res) => {
+  res.set('Content-Type', 'application/json');
+  models.Tarjeta.findByPk(req.params.id).then(tarjeta => {
+    tarjeta.descubierta = req.body.descubierta;
+    tarjeta.save().then(tarjetaActualizada => {
+      res.send(JSON.stringify({ tarjeta: tarjetaActualizada }, null, 2));
+    });
   });
 });
 
