@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       afterCreate(tablero) {
         const palabras = generarPalabras();
-        console.log(palabras);
         const clave = new Clave(tablero.siguienteJugador);
         _.zip(palabras, clave.casillas).map((x) => {
           sequelize.models.Tarjeta.create({ palabra: x[0], agente: x[1], TableroId: tablero.id });
@@ -28,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   Tablero.associate = function(models) {
     Tablero.hasMany(models.Tarjeta, { as: 'tarjetas' });
+    Tablero.belongsToMany(models.Usuario, { through: 'UsuarioTablero' });
   };
   return Tablero;
 };

@@ -17,7 +17,7 @@ app.use(morgan('combined'));
 // API
 app.post('/api/tablero/crear', (req, res) => {
   models.Tablero.create().then(tablero => {
-    res.status(201).json({ tablero: tablero });
+    res.json({ tablero: tablero });
   });
 });
 
@@ -34,7 +34,7 @@ app.patch('/api/tarjeta/:id', (req, res) => {
   models.Tarjeta.findByPk(req.params.id).then(tarjeta => {
     tarjeta.descubierta = req.body.descubierta;
     tarjeta.save().then(tarjetaActualizada => {
-      res.status(204).json({ tarjeta: tarjetaActualizada });
+      res.json({ tarjeta: tarjetaActualizada });
     });
   });
 });
