@@ -1,46 +1,47 @@
+const morgan = require('morgan');
 const express = require('express');
 const path = require('path');
-const app = express();
 const models = require('../models');
+const app = express();
+
 // Constants
 const PORT = process.env.PORT || 8080;
 const HOST = '0.0.0.0';
 
 const CLIENT_BUILD_PATH = path.join(__dirname, '../../client/build');
 
-// Static files
 app.use(express.static(CLIENT_BUILD_PATH));
 app.use(express.json());
+app.use(morgan('combined'));
 
 // API
 app.post('/api/tablero/crear', (req, res) => {
-  res.set('Content-Type', 'application/json');
-  models.Tablero.create().then(tablero => res.send(JSON.stringify({ tablero: tablero }, null, 2)));
+  models.Tablero.create().then(tablero => {
+    res.status(201).json({ tablero: tablero });
+  });
 });
 
 app.get('/api/tablero/:id', (req, res) => {
-  res.set('Content-Type', 'application/json');
   models.Tablero.findByPk(req.params.id, {
     include: ['tarjetas'],
     order: [['tarjetas', 'id', 'ASC']]
   }).then(tablero => {
-    res.send(JSON.stringify({ tablero: tablero }, null, 2));
+    res.json({ tablero: tablero });
   });
 });
 
 app.patch('/api/tarjeta/:id', (req, res) => {
-  res.set('Content-Type', 'application/json');
   models.Tarjeta.findByPk(req.params.id).then(tarjeta => {
     tarjeta.descubierta = req.body.descubierta;
     tarjeta.save().then(tarjetaActualizada => {
-      res.send(JSON.stringify({ tarjeta: tarjetaActualizada }, null, 2));
+      res.status(204).json({ tarjeta: tarjetaActualizada });
     });
   });
 });
 
 // All remaining requests return the React app, so it can handle routing.
-app.get('*', function(request, response) {
-  response.sendFile(path.join(CLIENT_BUILD_PATH, 'index.html'));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(CLIENT_BUILD_PATH, 'index.html'));
 });
 
 app.listen(PORT, HOST);
